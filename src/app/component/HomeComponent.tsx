@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Header from "./Header";
 import Featured from "./Featured";
 import HowItWorks from "./HowItWorks";
