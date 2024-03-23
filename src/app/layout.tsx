@@ -23,7 +23,7 @@ export default function RootLayout({
             appearance: {
               theme: "dark",
               accentColor: "#676FFF",
-              logo: "/pepehero.png",
+              logo: "/next.svg",
             },
             embeddedWallets: {
               createOnLogin: "users-without-wallets",
