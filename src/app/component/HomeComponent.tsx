@@ -17,26 +17,9 @@ export default function HomeComponent() {
                 Discover and fund the next big thing. From open source projects
                 to indie apps, support the work of developers around the world.
               </p>
-              {/* <form className='mx-auto max-w-sm space-y-2'>
-                <input
-                  className='w-full px-4 py-2 border rounded-lg'
-                  placeholder='Enter your email'
-                  type='email'
-                />
-                <button className='w-full px-4 py-2 mt-4 bg-blue-500 text-white rounded-lg'>
-                  Get Notified
-                </button>
-                <p className='text-xs text-gray-500 dark:text-gray-400'>
-                  Sign up to get notified when we launch.
-                  <Link className='underline underline-offset-2' href='#'>
-                    Terms & Conditions
-                  </Link>
-                </p>
-              </form> */}
             </div>
           </div>
         </section>
-
         <HowItWorks />
         <Featured />
         <section className='w-full py-12 md:py-24 lg:py-32 border-t'>
@@ -59,20 +42,6 @@ export default function HomeComponent() {
           <p className='text-xs text-gray-500 dark:text-gray-400'>
             © 2024. All rights reserved.
           </p>
-          {/* <nav className='flex flex-col gap-2 sm:flex-row'>
-            <Link
-              className='text-xs hover:underline underline-offset-4'
-              href='#'
-            >
-              Terms of Service
-            </Link>
-            <Link
-              className='text-xs hover:underline underline-offset-4'
-              href='#'
-            >
-              Privacy
-            </Link> 
-          </nav> */}
         </div>
       </footer>
     </div>

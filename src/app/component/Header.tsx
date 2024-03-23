@@ -1,6 +1,20 @@
+"use client";
+import { usePrivy } from "@privy-io/react-auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const { login, authenticated } = usePrivy();
+  const router = useRouter();
+
+  async function userLogin() {
+    if (authenticated) {
+      router.push("/campaigns");
+    } else {
+      login();
+    }
+  }
+
   return (
     <header className='px-4 lg:px-6 h-14 flex items-center justify-between'>
       <Link className='flex items-center' href='#'>
@@ -8,23 +22,13 @@ export default function Header() {
         <span className='sr-only'>Home</span>
       </Link>
       <div className='flex items-center'>
-        <button className='mr-4'>Create Project</button>
-        <div className='relative'>
-          <button className='h-8 w-8 rounded-full overflow-hidden border-2 border-gray-900 flex items-center justify-center dark:border-gray-50'>
-            <img
-              className='w-6 h-6 rounded-full'
-              alt='Avatar'
-              src='/avatar.jpg'
-            />
+        <div className='absolute right-0 mt-2 w-48 shadow-lg'>
+          <button
+            className='bg-purple-600 text-white font-bold py-2 px-4 rounded-full mb-4'
+            onClick={userLogin}
+          >
+            Login
           </button>
-          <div className='absolute right-0 mt-2 w-48 bg-white shadow-lg'>
-            <Link
-              className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
-              href='#'
-            >
-              Login/Logout
-            </Link>
-          </div>
         </div>
       </div>
     </header>
