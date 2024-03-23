@@ -1,4 +1,4 @@
-[
+const CrowdFundABI = [
   {
     inputs: [{ internalType: "address", name: "_token", type: "address" }],
     stateMutability: "nonpayable",
@@ -286,3 +286,5 @@
     type: "function",
   },
 ];
+
+export default CrowdFundABI;

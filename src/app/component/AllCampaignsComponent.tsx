@@ -1,7 +1,24 @@
+import Link from "next/link";
+
+// TODO: update data
+const projects = [
+  { id: "1", name: "Project One" },
+  { id: "2", name: "Project Two" },
+];
+
 export default function AllCampaignsComponent() {
   return (
-    <div className='max-w-5xl mx-auto my-8 p-6 border rounded shadow-md'>
-      <h1 className='text-2xl font-bold text-center mb-6'>All Campaigns</h1>
+    <div>
+      <h1>Current Projects</h1>
+      <ul>
+        {projects.map((project) => (
+          <li key={project.id}>
+            <Link href={`/campaigns/${project.id}`}>
+              <div>{project.name}</div>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
