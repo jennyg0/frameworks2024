@@ -7,12 +7,12 @@ export const dynamic = "error";
 export const revalidate = 3600;
 export const runtime = "edge";
 
-export const FRAME_IMAGE_DIMENSIONS = {
+const FRAME_IMAGE_DIMENSIONS = {
   width: 1200,
   height: 630,
 };
 
-export const generateFrameImage = async (content: React.ReactNode) => {
+const generateFrameImage = async (content: React.ReactNode) => {
   const imageResponse = new ImageResponse(
     (
       <div
@@ -52,7 +52,10 @@ export async function GET(
   { params }: { params: { index: number } }
 ) {
   const images = [
-    <div tw='flex flex-col w-full h-full items-center justify-center bg-white'>
+    <div
+      key={1}
+      tw='flex flex-col w-full h-full items-center justify-center bg-white'
+    >
       <div tw='flex w-full h-full text-white bg-blue'>
         <div tw='flex flex-row w-full p-15 items-center justify-center'>
           <h2 tw='flex flex-col text-8xl font-bold tracking-tight text-left px-10'>
@@ -61,20 +64,14 @@ export async function GET(
         </div>
       </div>
     </div>,
-    <div tw='flex flex-col w-full h-full items-center justify-center bg-white'>
+    <div
+      key={2}
+      tw='flex flex-col w-full h-full items-center justify-center bg-white'
+    >
       <div tw='flex w-full h-full text-white bg-blue'>
         <div tw='flex flex-row w-full p-15 items-center justify-center'>
           <h2 tw='flex flex-col text-8xl font-bold tracking-tight text-left px-10'>
             <span>This is another example dynamic image</span>
-          </h2>
-        </div>
-      </div>
-    </div>,
-    <div tw='flex flex-col w-full h-full items-center justify-center bg-white'>
-      <div tw='flex w-full h-full text-white bg-blue'>
-        <div tw='flex flex-row w-full p-15 items-center justify-center'>
-          <h2 tw='flex flex-col text-8xl font-bold tracking-tight text-left px-10'>
-            <span>This is another another example dynamic image</span>
           </h2>
         </div>
       </div>
