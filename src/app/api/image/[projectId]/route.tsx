@@ -53,7 +53,7 @@ const generateFrameImage = async (content: React.ReactNode) => {
 
 export async function GET(_request: NextRequest, { params }: Props) {
   const { projectId } = params;
-  console.log(projectId, "pid");
+
   const image = (
     <div tw='flex flex-row w-full p-10 items-center justify-center'>
       <h2 tw='flex flex-col text-2xl font-bold tracking-tight text-left text-black'>
