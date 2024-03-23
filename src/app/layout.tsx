@@ -32,7 +32,6 @@ export default function RootLayout({
         >
           {children}
         </PrivyProvider>
-        {children}
       </body>
     </html>
   );
