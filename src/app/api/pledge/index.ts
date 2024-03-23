@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { encodeFunctionData, formatEther, parseEther, parseGwei } from "viem";
 import { baseSepolia } from "viem/chains";
 import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
-import ClickTheButtonABI from "../../_contracts/ClickTheButtonAbi";
-import { BUY_MY_COFFEE_CONTRACT_ADDR } from "../../config";
+import { CrowdFundABI } from "../../../contract/abi";
+import { CROWDFUND_CONTRACT_ADDR } from "../../config";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const body: FrameRequest = await req.json();
@@ -30,8 +30,8 @@ export async function POST(req: NextRequest): Promise<Response> {
 export const dynamic = "force-dynamic";
 
 const data = encodeFunctionData({
-  abi: ClickTheButtonABI,
-  functionName: "clickTheButton",
+  abi: CrowdFundABI,
+  functionName: "pledge",
 });
 
 const txData: FrameTransactionResponse = {
@@ -40,7 +40,7 @@ const txData: FrameTransactionResponse = {
   params: {
     abi: [],
     data,
-    to: BUY_MY_COFFEE_CONTRACT_ADDR,
+    to: CROWDFUND_CONTRACT_ADDR,
     value: parseGwei("10000").toString(), // 0.00001 ETH
   },
 };

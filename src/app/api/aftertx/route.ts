@@ -22,7 +22,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: "tx",
           label: "Click Again!",
-          target: `${NEXT_PUBLIC_URL}/api/buttonclicker`,
+          target: `${NEXT_PUBLIC_URL}/api/pledge`,
         },
         // {
         //   action: "link",

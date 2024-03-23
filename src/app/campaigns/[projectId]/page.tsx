@@ -7,7 +7,7 @@ const frameMetadata = getFrameMetadata({
     {
       action: "tx",
       label: "support this project",
-      target: `${NEXT_PUBLIC_URL}/api/buttonclicker`,
+      target: `${NEXT_PUBLIC_URL}/api/pledge`,
     },
   ],
   input: {
