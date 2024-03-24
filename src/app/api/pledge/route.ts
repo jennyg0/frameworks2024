@@ -26,7 +26,7 @@ async function getResponse(
     neynarApiKey: "NEYNAR_ONCHAIN_KIT",
   });
 
-  if (!isValid) {
+  if (!isValid || !projectId) {
     return new NextResponse("Message not valid", { status: 500 });
   }
 
@@ -35,7 +35,7 @@ async function getResponse(
   const data = encodeFunctionData({
     abi: CrowdFundABI,
     functionName: "pledge",
-    args: [BigInt(1), parseEther(amount) || parseEther("0.001")],
+    args: [BigInt(projectId)],
   });
 
   const txData: FrameTransactionResponse = {
