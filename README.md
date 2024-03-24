@@ -4,7 +4,7 @@ Discover and fund the next big thing. From open source projects to indie apps, s
 
 ## Getting Started
 
-The smart contract [https://sepolia.basescan.org/address/0x392F6E583F0836Fd4ceC63D72eF4A24564810308]
+The smart contract [https://sepolia.basescan.org/address/0xc1F250dA9503Ce0be51a362cE1C0590Df0Eb42e1]
 
 ## Description
 
