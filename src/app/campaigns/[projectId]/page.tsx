@@ -1,6 +1,10 @@
 import { getFrameMetadata } from "@coinbase/onchainkit/frame";
-import type { Metadata } from "next";
 import { NEXT_PUBLIC_URL } from "../../config";
+import dynamic from "next/dynamic";
+
+const CampaignReader = dynamic(() => import("@/app/component/CampaignReader"), {
+  ssr: false,
+});
 
 interface Props {
   params: {
@@ -52,9 +56,7 @@ export const generateMetadata = async ({ params: { projectId } }: Props) => {
 export default function Home({ params: { projectId } }: Props) {
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <div className='z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex'>
-        project id : {projectId}
-      </div>
+      <CampaignReader projectId={projectId} />
     </main>
   );
 }
