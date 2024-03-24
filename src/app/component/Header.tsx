@@ -4,33 +4,35 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const { login, authenticated } = usePrivy();
+  const { login, logout, authenticated } = usePrivy();
   const router = useRouter();
 
-  async function userLogin() {
+  async function handleUserAction() {
     if (authenticated) {
-      router.push("/campaigns");
+      await logout(); // Log out the user
+      router.push("/");
     } else {
       login();
+      if (authenticated) {
+        router.push("/campaigns");
+      }
     }
   }
 
   return (
     <header className='px-4 lg:px-6 h-14 flex items-center justify-between'>
-      <Link className='flex items-center' href='#'>
+      <Link href='/' className='flex items-center'>
+        {" "}
+        {/* Assuming the home link should be '/' */}
         <MountainIcon className='h-6 w-6' />
         <span className='sr-only'>Home</span>
       </Link>
-      <div className='flex items-center'>
-        <div className='absolute right-0 mt-2 w-48 shadow-lg'>
-          <button
-            className='bg-purple-600 text-white font-bold py-2 px-4 rounded-full mb-4'
-            onClick={userLogin}
-          >
-            Login
-          </button>
-        </div>
-      </div>
+      <button
+        className='bg-purple-600 text-white font-bold py-2 px-4 rounded-full mb-4'
+        onClick={handleUserAction}
+      >
+        {authenticated ? "Log out" : "Log in"}
+      </button>
     </header>
   );
 }
