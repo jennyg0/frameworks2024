@@ -34,7 +34,6 @@ const CampaignReader: React.FC<CampaignReaderProps> = ({ projectId }) => {
   });
 
   const data = campaign as any;
-  console.log(data, "data");
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
