@@ -6,16 +6,13 @@ import { NEXT_PUBLIC_URL } from "./config";
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: "Test",
-    },
-    {
       action: "link",
-      label: "Link to Google",
-      target: "https://www.google.com",
+      label: "Link to website",
+      target: "https://frameworks2024.vercel.app",
     },
   ],
   image: {
-    src: `${NEXT_PUBLIC_URL}/next.svg`,
+    src: `${NEXT_PUBLIC_URL}/funding.webp`,
     aspectRatio: "1:1",
   },
   postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
@@ -27,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Funding the Future",
     description: "Discover and fund the next big thing.",
-    images: [`${NEXT_PUBLIC_URL}/next.svg`],
+    images: [`${NEXT_PUBLIC_URL}/funding.webp`],
   },
   other: {
     ...frameMetadata,

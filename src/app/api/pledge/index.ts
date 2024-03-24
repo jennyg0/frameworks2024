@@ -31,11 +31,12 @@ async function getResponse(
   }
 
   const amount = message.input || "";
+  if (!projectId) return new NextResponse("No ProjectId", { status: 500 });
 
   const data = encodeFunctionData({
     abi: CrowdFundABI,
     functionName: "pledge",
-    args: [projectId, parseEther(amount)],
+    args: [BigInt(projectId), parseEther(amount) || parseEther("0.001")],
   });
 
   const txData: FrameTransactionResponse = {
