@@ -1,20 +1,61 @@
 "use client";
+import CrowdFundABI from "@/contract/abi";
 import { useState } from "react";
+import { useWriteContract } from "wagmi";
+import { CROWDFUND_CONTRACT_ADDR } from "../config";
+import { useWallets } from "@privy-io/react-auth";
+
+function dateToUnixTimestamp(dateString: string) {
+  const date = new Date(dateString);
+
+  const unixTimestamp = Math.floor(date.getTime() / 1000);
+
+  return unixTimestamp;
+}
 
 export default function CampaignComponent() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [goal, setGoal] = useState("");
   const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const { wallets } = useWallets();
+
   const today = new Date().toISOString().split("T")[0];
   const ninetyDaysLater = new Date(
     new Date().setDate(new Date().getDate() + 90)
   )
     .toISOString()
     .split("T")[0];
+
+  const { writeContract } = useWriteContract();
+
+  const handleLaunch = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!wallets.length) alert("please connect wallet first");
+
+    writeContract({
+      abi: CrowdFundABI,
+      address: CROWDFUND_CONTRACT_ADDR,
+      functionName: "launch",
+      args: [
+        title,
+        description,
+        BigInt(goal),
+        dateToUnixTimestamp(startDate),
+        dateToUnixTimestamp(endDate),
+        BigInt(1),
+      ],
+    });
+  };
+
   return (
     <div className='max-w-md mx-auto my-8 p-6 border rounded shadow-md'>
       <h1 className='text-2xl font-bold text-center mb-6'>
         Campaign Details Form
       </h1>
-      <form className='text-black space-y-4'>
+      <form className='text-black space-y-4' onSubmit={handleLaunch}>
         <div>
           <label
             htmlFor='title'
@@ -27,6 +68,8 @@ export default function CampaignComponent() {
             id='title'
             name='title'
             className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
@@ -41,6 +84,8 @@ export default function CampaignComponent() {
             id='description'
             name='description'
             className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
 
@@ -56,6 +101,8 @@ export default function CampaignComponent() {
             id='goal'
             name='goal'
             className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
           />
         </div>
 
@@ -89,6 +136,8 @@ export default function CampaignComponent() {
             name='end-date'
             min={startDate || today}
             max={ninetyDaysLater}
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
             className='text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           />
         </div>

@@ -29,7 +29,7 @@ export const generateMetadata = async ({ params: { projectId } }: Props) => {
       },
     ],
     input: {
-      text: "support amount in eth",
+      text: "amount in base sepolia",
     },
     image: {
       src: `${NEXT_PUBLIC_URL}/api/image/${projectId}`,
