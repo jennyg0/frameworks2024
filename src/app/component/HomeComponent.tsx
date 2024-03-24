@@ -14,9 +14,9 @@ export default function HomeComponent() {
                 Funding the Future
               </h1>
               <p className='mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400'>
-                Discover and fund the next big thing. From open source projects
-                to indie apps, support the work of builders and creators around
-                the world.
+                Discover and crowdfund the next big thing. From open source
+                projects to indie apps, support the work of builders and
+                creators around the world.
               </p>
             </div>
           </div>
