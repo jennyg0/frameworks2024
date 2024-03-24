@@ -1,25 +1,21 @@
 "use client";
-import CrowdFundABI from "@/contract/abi";
 import { useState } from "react";
-import { useWriteContract } from "wagmi";
-import { CROWDFUND_CONTRACT_ADDR } from "../config";
+import {
+  type BaseError,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+} from "wagmi";
+import CampaignContractABI from "../../contract/abi";
 import { useWallets } from "@privy-io/react-auth";
-
-function dateToUnixTimestamp(dateString: string) {
-  const date = new Date(dateString);
-
-  const unixTimestamp = Math.floor(date.getTime() / 1000);
-
-  return unixTimestamp;
-}
+import { baseSepolia } from "viem/chains";
 
 export default function CampaignComponent() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
+  const [monthlyGoal, setMonthlyGoal] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const { wallets } = useWallets();
 
   const today = new Date().toISOString().split("T")[0];
   const ninetyDaysLater = new Date(
@@ -28,34 +24,70 @@ export default function CampaignComponent() {
     .toISOString()
     .split("T")[0];
 
-  const { writeContract } = useWriteContract();
+  const { wallets } = useWallets();
+  const {
+    status,
+    data: hash,
+    error,
+    isPending,
+    writeContract,
+  } = useWriteContract();
 
-  const handleLaunch = async (event: React.FormEvent) => {
-    event.preventDefault();
+  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  //   console.log("wallets", wallets);
 
-    if (!wallets.length) alert("please connect wallet first");
+  //   const startTimestamp = Math.floor(
+  //     new Date(startDate).getTime() / 1000 + 1000
+  //   );
+  //   const endTimestamp = Math.floor(new Date(endDate).getTime() / 1000);
 
-    writeContract({
-      abi: CrowdFundABI,
-      address: CROWDFUND_CONTRACT_ADDR,
-      functionName: "launch",
-      args: [
-        title,
-        description,
-        BigInt(goal),
-        dateToUnixTimestamp(startDate),
-        dateToUnixTimestamp(endDate),
-        BigInt(1),
-      ],
-    });
-  };
+  //   console.log(
+  //     "Form info",
+  //     title,
+  //     description,
+  //     goal,
+  //     startTimestamp,
+  //     endTimestamp,
+  //     monthlyGoal
+  //   );
+
+  //   const contract = await writeContract({
+  //     address: "0x392F6E583F0836Fd4ceC63D72eF4A24564810308",
+  //     abi: CampaignContractABI,
+  //     functionName: "launch",
+  //     args: [
+  //       {
+  //         title,
+  //         description,
+  //         goal,
+  //         startTimestamp,
+  //         endTimestamp,
+  //         monthlyGoal,
+  //       },
+  //     ],
+  //   });
+
+  //   console.log("contract", contract);
+  //   console.log("hash", hash);
+  //   console.log("status", await status);
+  // }
+
+  // const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  //   useWaitForTransactionReceipt({
+  //     hash,
+  //   });
+  // console.log("isConfirming", isConfirming);
+  // console.log("hash", hash);
 
   return (
     <div className='max-w-md mx-auto my-8 p-6 border rounded shadow-md'>
       <h1 className='text-2xl font-bold text-center mb-6'>
         Campaign Details Form
       </h1>
-      <form className='text-black space-y-4' onSubmit={handleLaunch}>
+      {/* {isPending ? "Confirming..." : "Campaign Launched!"} */}
+      {hash && <div>Transaction Hash: {hash}</div>}
+      <form className='text-black space-y-4'>
         <div>
           <label
             htmlFor='title'
@@ -67,9 +99,9 @@ export default function CampaignComponent() {
             type='text'
             id='title'
             name='title'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           />
         </div>
 
@@ -83,9 +115,9 @@ export default function CampaignComponent() {
           <textarea
             id='description'
             name='description'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           ></textarea>
         </div>
 
@@ -100,9 +132,26 @@ export default function CampaignComponent() {
             type='number'
             id='goal'
             name='goal'
-            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
             value={goal}
             onChange={(e) => setGoal(e.target.value)}
+            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor='monthlyGoal'
+            className='block text-sm font-medium text-gray-700'
+          >
+            Monthly Goal
+          </label>
+          <input
+            type='number'
+            id='monthlyGoal'
+            name='monthlyGoal'
+            value={monthlyGoal}
+            onChange={(e) => setMonthlyGoal(e.target.value)}
+            className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           />
         </div>
 
@@ -117,9 +166,9 @@ export default function CampaignComponent() {
             type='date'
             id='start-date'
             name='start-date'
-            min={today}
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
+            min={today}
             className='text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           />
         </div>
@@ -134,10 +183,10 @@ export default function CampaignComponent() {
             type='date'
             id='end-date'
             name='end-date'
-            min={startDate || today}
-            max={ninetyDaysLater}
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
+            min={startDate || today}
+            max={ninetyDaysLater}
             className='text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
           />
         </div>
