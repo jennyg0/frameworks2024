@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Funding the Future
+
+Discover and fund the next big thing. From open source projects to indie apps, support the work of builders and creators around the world.
 
 ## Getting Started
 
@@ -14,23 +16,22 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Funding the Future is designed to revolutionize the way innovative projects receive financial backing. The platform's mission is to enable the discovery and funding of groundbreaking ideas, particularly in open-source projects and independent applications. It aims to create a bridge between visionary creators and supportive patrons globally.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+In a world brimming with innovative ideas, many potentially transformative projects lack the necessary financial support. "Funding the Future" seeks to fill this gap by connecting creative talents with funding opportunities.
 
-## Learn More
+Funding the Future aims to catalyze the growth of innovative projects, contributing to technological advancement and economic growth on a global scale, establishing a new standard for community-driven project funding.
 
-To learn more about Next.js, take a look at the following resources:
+With the use of Frames, we're making it easier than ever for projects to be discovered and supported. Farcaster users can directly pledge to projects they find in a frame.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Next.js: We used Next.js to create our dApp, which facilitates client-side interaction with Ethereum blockchain using wagmi. This integration is crucial for executing transactions, interacting with smart contracts, and retrieving blockchain data directly from the user's browser.
 
-## Deploy on Vercel
+Privy Integration: We integrate Privy for authentication to ensure a seamless login experience. Privy offers a decentralized approach, allowing users to authenticate without traditional passwords, reducing friction and enhancing security.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Base's OnchainKit Utilization: We leverage Base's OnchainKit to scaffold and manage the underlying blockchain frames. This toolkit streamlines the development of blockchain-related functionalities, enabling robust and scalable infrastructure.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Smart Contract Development with Solidity: The core of our platform's functionality is driven by smart contracts written in Solidity. These contracts handle all on-platform transactions, from funding operations to the distribution of funds, ensuring transparent and trustless interactions.
