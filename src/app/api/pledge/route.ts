@@ -31,7 +31,6 @@ async function getResponse(
   }
 
   const amount = message.input || "";
-  console.log(projectId, message);
 
   const data = encodeFunctionData({
     abi: CrowdFundABI,

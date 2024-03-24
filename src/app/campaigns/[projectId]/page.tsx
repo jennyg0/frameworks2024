@@ -17,15 +17,15 @@ const title = "fund";
 const description = "funding for project";
 
 export const generateMetadata = async ({ params: { projectId } }: Props) => {
-  const imageURL = new URL(`${NEXT_PUBLIC_URL}/api/jobs`);
-  imageURL.searchParams.append("projectId", projectId);
+  const targetURL = new URL(`${NEXT_PUBLIC_URL}/api/pledge`);
+  targetURL.searchParams.append("projectId", projectId);
 
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
         action: "tx",
         label: "support this project",
-        target: `${NEXT_PUBLIC_URL}/api/pledge`,
+        target: `${NEXT_PUBLIC_URL}/api/pledge?projectId=${projectId}`,
         postUrl: `${NEXT_PUBLIC_URL}/api/aftertx`,
       },
     ],
@@ -46,7 +46,7 @@ export const generateMetadata = async ({ params: { projectId } }: Props) => {
     openGraph: {
       title,
       description,
-      images: [imageURL],
+      images: [`${NEXT_PUBLIC_URL}/api/image/${projectId}`],
     },
     other: {
       ...frameMetadata,
