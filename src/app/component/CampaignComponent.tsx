@@ -14,7 +14,7 @@ export default function CampaignComponent() {
       <h1 className='text-2xl font-bold text-center mb-6'>
         Campaign Details Form
       </h1>
-      <form className='space-y-4'>
+      <form className='text-black space-y-4'>
         <div>
           <label
             htmlFor='title'
