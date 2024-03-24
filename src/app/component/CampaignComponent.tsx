@@ -6,10 +6,8 @@ import { CROWDFUND_CONTRACT_ADDR } from "../config";
 import { useWallets } from "@privy-io/react-auth";
 
 function dateToUnixTimestamp(dateString: string) {
-  // Parse the date string to a Date object
   const date = new Date(dateString);
 
-  // Convert the date to a Unix timestamp (seconds since epoch)
   const unixTimestamp = Math.floor(date.getTime() / 1000);
 
   return unixTimestamp;
@@ -57,7 +55,7 @@ export default function CampaignComponent() {
       <h1 className='text-2xl font-bold text-center mb-6'>
         Campaign Details Form
       </h1>
-      <form className='space-y-4' onSubmit={handleLaunch}>
+      <form className='text-black space-y-4' onSubmit={handleLaunch}>
         <div>
           <label
             htmlFor='title'
