@@ -26,6 +26,7 @@ export const generateMetadata = async ({ params: { projectId } }: Props) => {
         action: "tx",
         label: "support this project",
         target: `${NEXT_PUBLIC_URL}/api/pledge`,
+        postUrl: `${NEXT_PUBLIC_URL}/api/aftertx`,
       },
     ],
     input: {
