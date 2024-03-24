@@ -45,7 +45,6 @@ export default function CampaignComponent() {
         BigInt(goal),
         dateToUnixTimestamp(startDate),
         dateToUnixTimestamp(endDate),
-        BigInt(1),
       ],
     });
   };
