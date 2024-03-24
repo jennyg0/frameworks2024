@@ -10,8 +10,18 @@ import type { FrameTransactionResponse } from "@coinbase/onchainkit/frame";
 import CrowdFundABI from "../../../contract/abi";
 import { CROWDFUND_CONTRACT_ADDR } from "../../config";
 
-async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
+interface Props {
+  params: {
+    projectId?: string;
+  };
+}
+
+async function getResponse(
+  req: NextRequest,
+  { params }: Props
+): Promise<NextResponse | Response> {
   const body: FrameRequest = await req.json();
+  const { projectId } = params;
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: "NEYNAR_ONCHAIN_KIT",
   });
@@ -25,6 +35,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const data = encodeFunctionData({
     abi: CrowdFundABI,
     functionName: "pledge",
+    args: [projectId, parseEther(amount)],
   });
 
   const txData: FrameTransactionResponse = {
@@ -42,7 +53,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
-  return getResponse(req);
+  const url = new URL(req.url);
+  const projectId = url.searchParams.get("projectId") || undefined;
+
+  const props: Props = { params: { projectId } };
+
+  return getResponse(req, props);
 }
 
 export const dynamic = "force-dynamic";
