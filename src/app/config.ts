@@ -5,7 +5,7 @@ export const NEXT_PUBLIC_URL =
     : "https://frameworks2024.vercel.app";
 
 export const CROWDFUND_CONTRACT_ADDR =
-  "0xc1F250dA9503Ce0be51a362cE1C0590Df0Eb42e1";
+  "0x08f27301b4446D4499C7Ec29875649b94C1595E6";
 
 export const BLOCKCHAIN_RPC_URL = "https://sepolia.base.org";
 

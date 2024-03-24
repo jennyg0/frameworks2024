@@ -100,4 +100,34 @@ contract CrowdFund {
 
         emit Refund(_id, msg.sender, bal);
     }
+
+     function getCampaign(uint _id) external view returns (string memory title, string memory description, uint goal, uint pledged, uint32 startAt, uint32 endAt, bool claimed) {
+        require(_id <= count && _id > 0, "Campaign does not exist");
+        Campaign storage campaign = campaigns[_id];
+        return (
+            campaign.title,
+            campaign.description,
+            campaign.goal,
+            campaign.pledged,
+            campaign.startAt,
+            campaign.endAt,
+            campaign.claimed
+        );
+    }
+
+    function getAllCampaigns() external view returns (uint[] memory ids, string[] memory titles, string[] memory descriptions) {
+        ids = new uint[](count);
+        titles = new string[](count);
+        descriptions = new string[](count);
+        ids = new uint[](count);
+
+        for (uint i = 1; i <= count; i++) {
+            Campaign storage campaign = campaigns[i];
+            ids[i - 1] = i;
+            titles[i - 1] = campaign.title;
+            descriptions[i - 1] = campaign.description;
+        }
+
+        return (ids, titles, descriptions);
+    }
 }

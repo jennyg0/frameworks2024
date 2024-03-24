@@ -147,6 +147,32 @@ const CrowdFundABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getAllCampaigns",
+    outputs: [
+      { internalType: "uint256[]", name: "ids", type: "uint256[]" },
+      { internalType: "string[]", name: "titles", type: "string[]" },
+      { internalType: "string[]", name: "descriptions", type: "string[]" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_id", type: "uint256" }],
+    name: "getCampaign",
+    outputs: [
+      { internalType: "string", name: "title", type: "string" },
+      { internalType: "string", name: "description", type: "string" },
+      { internalType: "uint256", name: "goal", type: "uint256" },
+      { internalType: "uint256", name: "pledged", type: "uint256" },
+      { internalType: "uint32", name: "startAt", type: "uint32" },
+      { internalType: "uint32", name: "endAt", type: "uint32" },
+      { internalType: "bool", name: "claimed", type: "bool" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "string", name: "_title", type: "string" },
       { internalType: "string", name: "_description", type: "string" },
