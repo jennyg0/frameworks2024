@@ -19,27 +19,20 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   return new NextResponse(
     getFrameHtmlResponse({
       buttons: [
-        // {
-        //   action: "tx",
-        //   label: "Click Again!",
-        //   target: `${NEXT_PUBLIC_URL}/api/pledge`,
-        // },
         {
           label: `Tx: ${body?.untrustedData?.transactionId || "--"}`,
         },
-        // {
-        //   action: "link",
-        //   label: "Leaderboard",
-        //   target: `${NEXT_PUBLIC_URL}/buttonclicker`,
-        // },
+        {
+          action: "link",
+          label: "support more campaigns",
+          target: `${NEXT_PUBLIC_URL}/campaigns`,
+        },
       ],
       image: {
-        src: `${NEXT_PUBLIC_URL}/button.webp`,
+        src: `${NEXT_PUBLIC_URL}/thanks.webp`,
         aspectRatio: "1:1",
       },
-      // input: {
-      //   text: "Noooo, why did you click!?",
-      // },
+
       postUrl: `${NEXT_PUBLIC_URL}/api/aftertx`,
     })
   );

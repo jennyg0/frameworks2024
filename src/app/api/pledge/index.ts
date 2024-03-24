@@ -12,13 +12,15 @@ import { CROWDFUND_CONTRACT_ADDR } from "../../config";
 
 async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
   const body: FrameRequest = await req.json();
-  const { isValid } = await getFrameMessage(body, {
+  const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: "NEYNAR_ONCHAIN_KIT",
   });
 
   if (!isValid) {
     return new NextResponse("Message not valid", { status: 500 });
   }
+
+  const amount = message.input || "";
 
   const data = encodeFunctionData({
     abi: CrowdFundABI,
@@ -32,7 +34,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
       abi: [],
       data,
       to: CROWDFUND_CONTRACT_ADDR,
-      value: parseGwei("10000").toString(), // TODO change to input value
+      value: parseEther(amount).toString(),
     },
   };
 
