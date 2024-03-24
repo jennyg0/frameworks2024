@@ -7,6 +7,6 @@ export const NEXT_PUBLIC_URL =
 export const CROWDFUND_CONTRACT_ADDR =
   "0x392F6E583F0836Fd4ceC63D72eF4A24564810308";
 
-export const BLOCKCHAIN_RPC_URL = "https://rpc.notadegen.com/base/sepolia";
+export const BLOCKCHAIN_RPC_URL = "https://sepolia.base.org";
 
-// "https://sepolia.base.org";
+// "https://rpc.notadegen.com/base/sepolia";
