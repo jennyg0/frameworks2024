@@ -5,7 +5,7 @@ import { CROWDFUND_CONTRACT_ADDR, BLOCKCHAIN_RPC_URL } from "../../../config";
 import CrowdFundABI from "@/contract/abi";
 
 export const dynamic = "force-dynamic";
-// export const revalidate = 3600;
+export const revalidate = 3600;
 export const runtime = "edge";
 
 interface Props {
