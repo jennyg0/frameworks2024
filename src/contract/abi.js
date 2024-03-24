@@ -184,3 +184,5 @@ const CrowdFundABI = [
     type: "function",
   },
 ];
+
+export default CrowdFundABI;
