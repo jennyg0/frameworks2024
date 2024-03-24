@@ -4,17 +4,7 @@ Discover and fund the next big thing. From open source projects to indie apps, s
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The smart contract [https://sepolia.basescan.org/address/0x392F6E583F0836Fd4ceC63D72eF4A24564810308]
 
 ## Description
 
