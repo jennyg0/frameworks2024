@@ -32,7 +32,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse | Response> {
       abi: [],
       data,
       to: CROWDFUND_CONTRACT_ADDR,
-      value: parseGwei("10000").toString(), // 0.00001 ETH
+      value: parseGwei("10000").toString(), // TODO change to input value
     },
   };
 
