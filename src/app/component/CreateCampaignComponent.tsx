@@ -1,15 +1,14 @@
 "use client";
 import CrowdFundABI from "@/contract/abi";
-import { useState } from "react";
-import { useWriteContract } from "wagmi";
+import { useEffect, useState } from "react";
+import { type BaseError, useAccount, useWriteContract } from "wagmi";
 import { CROWDFUND_CONTRACT_ADDR } from "../config";
 import { useWallets } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 
 function dateToUnixTimestamp(dateString: string) {
   const date = new Date(dateString);
-
   const unixTimestamp = Math.floor(date.getTime() / 1000);
-
   return unixTimestamp;
 }
 
@@ -20,6 +19,7 @@ export default function CampaignComponent() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const { wallets } = useWallets();
+  const router = useRouter();
 
   const today = new Date().toISOString().split("T")[0];
   const ninetyDaysLater = new Date(
@@ -28,14 +28,25 @@ export default function CampaignComponent() {
     .toISOString()
     .split("T")[0];
 
-  const { writeContract } = useWriteContract();
+  const { isPending, status, error, writeContract } = useWriteContract();
 
   const handleLaunch = async (event: React.FormEvent) => {
     event.preventDefault();
+    console.log(
+      title,
+      description,
+      BigInt(goal),
+      dateToUnixTimestamp(startDate),
+      dateToUnixTimestamp(endDate),
+      "inside"
+    );
 
-    if (!wallets.length) alert("please connect wallet first");
+    if (!wallets.length) {
+      alert("Please connect your wallet first.");
+      return;
+    }
 
-    writeContract({
+    await writeContract({
       abi: CrowdFundABI,
       address: CROWDFUND_CONTRACT_ADDR,
       functionName: "launch",
@@ -48,6 +59,14 @@ export default function CampaignComponent() {
       ],
     });
   };
+
+  useEffect(() => {
+    if (status === "success") {
+      router.push("/campaigns");
+    }
+  }, [status, router]);
+
+  const allFieldsFilled = title && description && goal && startDate && endDate;
 
   return (
     <div className='max-w-md mx-auto my-8 p-6 border rounded shadow-md'>
@@ -143,11 +162,21 @@ export default function CampaignComponent() {
 
         <button
           type='submit'
-          className='w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+          disabled={!allFieldsFilled}
+          className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+            allFieldsFilled
+              ? "bg-indigo-600 hover:bg-indigo-700"
+              : "bg-indigo-300"
+          } focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
         >
           Submit
         </button>
       </form>
+      {error && (
+        <div className='text-red'>
+          Error: {(error as BaseError).shortMessage || error.message}
+        </div>
+      )}
     </div>
   );
 }
