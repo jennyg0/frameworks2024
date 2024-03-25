@@ -39,8 +39,16 @@ const CampaignReader: React.FC<CampaignReaderProps> = ({ projectId }) => {
   if (error) return <div>Error: {error.message}</div>;
   if (!data) return <div>no data</div>;
 
-  const formattedGoal = formatBigInt(data[2]);
-  const formattedPledged = formatBigInt(data[3]);
+  const goalBigInt = data[2];
+  const pledgedBigInt = data[3];
+
+  const formattedGoal = formatBigInt(goalBigInt);
+  const formattedPledged = formatBigInt(pledgedBigInt);
+
+const progressPercentage = Math.min(
+  100,
+  (Number(pledgedBigInt) / Number(goalBigInt)) * 100
+);
 
   const currentTime = Math.floor(Date.now() / 1000);
   const timeLeftInSeconds = data[5] - currentTime;
@@ -52,14 +60,28 @@ const CampaignReader: React.FC<CampaignReaderProps> = ({ projectId }) => {
   const timeLeftString = `${days} days, ${hours} hours, ${minutes} minutes left`;
 
   return (
-    <div className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <div className='z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex'>
-        project title : {data[0]} <br />
-        description: {data[1]} <br />
-        funding goal: {formattedGoal}
-        <br />
-        amount pledged: {formattedPledged} <br />
-        time left: {timeLeftString}
+    <div className='flex min-h-screen flex-col items-center justify-center px-6 py-24'>
+      <div className='space-y-4 z-10 max-w-5xl w-full bg-white shadow-xl rounded-lg p-8'>
+        <h1 className='text-2xl font-bold text-gray-800'>{data[0]}</h1>
+        <h2 className='text-xl font-semibold text-gray-800'>Description</h2>
+        <p className='text-gray-600'>{data[1]}</p>
+        <div>
+          <h2 className='text-lg font-semibold text-gray-800'>
+            Funding Progress
+          </h2>
+          <div className='w-full bg-gray-200 rounded-full h-6 dark:bg-gray-700'>
+            <div
+              className='bg-green-600 h-6 rounded-full'
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          <div className='flex justify-between text-sm font-medium mt-2 text-gray-600'>
+            <span>{formattedPledged} pledged</span>
+            <span>Goal: {formattedGoal}</span>
+          </div>
+        </div>
+        <h2 className='text-xl font-semibold text-gray-800'>Time Left</h2>
+        <p className='text-gray-600'>{timeLeftString}</p>
       </div>
     </div>
   );
